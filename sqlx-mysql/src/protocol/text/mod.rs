@@ -4,7 +4,7 @@ mod query;
 mod quit;
 mod row;
 
-pub(crate) use column::{ColumnDefinition, ColumnFlags, ColumnType};
+pub use column::{ColumnDefinition, ColumnFlags, ColumnType};
 pub(crate) use ping::Ping;
 pub(crate) use query::Query;
 pub(crate) use quit::Quit;
