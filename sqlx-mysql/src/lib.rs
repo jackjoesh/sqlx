@@ -21,7 +21,7 @@ mod database;
 mod error;
 mod io;
 mod options;
-mod protocol;
+//mod protocol;
 mod query_result;
 mod row;
 mod statement;
