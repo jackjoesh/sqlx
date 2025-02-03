@@ -8,7 +8,7 @@ use crate::protocol::text::{ColumnDefinition, ColumnFlags, ColumnType};
 #[derive(Debug, Clone)]
 #[cfg_attr(feature = "offline", derive(serde::Serialize, serde::Deserialize))]
 pub struct MySqlTypeInfo {
-    pub(crate) r#type: ColumnType,
+    pub r#type: ColumnType,
     pub(crate) flags: ColumnFlags,
 
     // [max_size] for integer types, this is (M) in BIT(M) or TINYINT(M)
