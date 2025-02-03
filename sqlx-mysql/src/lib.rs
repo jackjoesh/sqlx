@@ -40,7 +40,6 @@ mod testing;
 pub use protocol;
 pub use arguments::MySqlArguments;
 pub use column::MySqlColumn;
-pub use protocol::text::ColumnType;
 pub use connection::MySqlConnection;
 pub use database::MySql;
 pub use error::MySqlDatabaseError;
