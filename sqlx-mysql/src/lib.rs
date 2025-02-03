@@ -21,7 +21,7 @@ mod database;
 mod error;
 mod io;
 mod options;
-pub mod protocol;
+mod protocol;
 mod query_result;
 mod row;
 mod statement;
@@ -37,6 +37,7 @@ mod migrate;
 #[cfg(feature = "migrate")]
 mod testing;
 
+pub use protocol;
 pub use arguments::MySqlArguments;
 pub use column::MySqlColumn;
 pub use protocol::text::ColumnType;
