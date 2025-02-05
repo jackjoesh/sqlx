@@ -28,4 +28,8 @@ impl Column for MySqlColumn {
     fn type_info(&self) -> &MySqlTypeInfo {
         &self.type_info
     }
+    
+    fn flags(&self) -> Option<ColumnFlags> {
+        &self.flags
+    }
 }
