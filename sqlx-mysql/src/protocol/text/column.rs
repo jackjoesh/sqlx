@@ -101,7 +101,7 @@ pub enum ColumnType {
 // https://dev.mysql.com/doc/internals/en/com-query-response.html#packet-Protocol::ColumnDefinition41
 
 #[derive(Debug)]
-pub(crate) struct ColumnDefinition {
+pub struct ColumnDefinition {
     #[allow(unused)]
     catalog: Bytes,
     #[allow(unused)]
