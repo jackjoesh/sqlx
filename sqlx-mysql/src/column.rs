@@ -11,7 +11,7 @@ pub struct MySqlColumn {
     pub(crate) type_info: MySqlTypeInfo,
 
     #[cfg_attr(feature = "offline", serde(skip))]
-    pub flags: Option<ColumnFlags>,
+    pub(crate) flags: Option<ColumnFlags>,
 }
 
 impl Column for MySqlColumn {
