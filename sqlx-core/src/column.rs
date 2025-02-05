@@ -20,8 +20,6 @@ pub trait Column: 'static + Send + Sync + Debug {
 
     /// Gets the type information for the column.
     fn type_info(&self) -> &<Self::Database as Database>::TypeInfo;
-
-    fn flags(&self) -> &<Self::Database as Database>::Option<ColumnFlags>;
 }
 
 /// A type that can be used to index into a [`Row`] or [`Statement`].
