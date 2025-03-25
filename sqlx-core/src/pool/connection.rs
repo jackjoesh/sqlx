@@ -22,6 +22,7 @@ pub struct PoolConnection<DB: Database> {
     live: Option<Live<DB>>,
     close_on_drop: bool,
     pub(crate) pool: Arc<PoolInner<DB>>,
+    pub use_db: String,
 }
 
 pub(super) struct Live<DB: Database> {
@@ -262,6 +263,7 @@ impl<DB: Database> Floating<DB, Live<DB>> {
             live: Some(inner),
             close_on_drop: false,
             pool,
+            use_db: "default".to_string(),
         }
     }
 
