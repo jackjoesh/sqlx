@@ -19,15 +19,15 @@ const CLOSE_ON_DROP_TIMEOUT: Duration = Duration::from_secs(5);
 ///
 /// Will be returned to the pool on-drop.
 pub struct PoolConnection<DB: Database> {
-    live: Option<Live<DB>>,
+    pub live: Option<Live<DB>>,
     close_on_drop: bool,
     pub(crate) pool: Arc<PoolInner<DB>>,
-    pub use_db: String,
 }
 
 pub(super) struct Live<DB: Database> {
     pub(super) raw: DB::Connection,
     pub(super) created_at: Instant,
+    pub use_db: String,
 }
 
 pub(super) struct Idle<DB: Database> {
@@ -248,6 +248,7 @@ impl<DB: Database> Floating<DB, Live<DB>> {
             inner: Live {
                 raw: conn,
                 created_at: Instant::now(),
+                use_db: "default".to_string(),
             },
             guard,
         }
@@ -255,7 +256,6 @@ impl<DB: Database> Floating<DB, Live<DB>> {
 
     pub fn reattach(self) -> PoolConnection<DB> {
         let Floating { inner, guard } = self;
-
         let pool = Arc::clone(&guard.pool);
 
         guard.cancel();
@@ -263,7 +263,6 @@ impl<DB: Database> Floating<DB, Live<DB>> {
             live: Some(inner),
             close_on_drop: false,
             pool,
-            use_db: "default".to_string(),
         }
     }
 
