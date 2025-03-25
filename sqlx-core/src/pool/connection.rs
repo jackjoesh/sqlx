@@ -24,7 +24,7 @@ pub struct PoolConnection<DB: Database> {
     pub(crate) pool: Arc<PoolInner<DB>>,
 }
 
-pub(super) struct Live<DB: Database> {
+pub struct Live<DB: Database> {
     pub(super) raw: DB::Connection,
     pub(super) created_at: Instant,
     pub use_db: String,
