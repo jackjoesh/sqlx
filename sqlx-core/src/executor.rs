@@ -111,6 +111,45 @@ pub trait Executor<'c>: Send + Debug + Sized {
         self.fetch(query).try_collect().boxed()
     }
 
+    /// Execute the query, return all the resulting rows in [`Vec`] and column in [`QueryResult`].
+    fn fetch_all_with_meta<'e, 'q: 'e, E>(
+        self,
+        query: E,
+    ) -> BoxFuture<
+        'e,
+        Result<
+            (
+                Option<<Self::Database as Database>::QueryResult>,
+                Vec<<Self::Database as Database>::Row>,
+            ),
+            Error,
+        >,
+    >
+    where
+        'c: 'e,
+        E: 'q + Execute<'q, Self::Database>,
+        Self: 'e,
+    {
+        Box::pin(async move {
+            let mut query_result = None;
+            let mut rows = Vec::new();
+
+            let mut stream = self.fetch_many(query);
+            while let Some(step) = stream.next().await {
+                match step? {
+                    Either::Left(result) => {
+                        query_result = Some(result);
+                    }
+                    Either::Right(row) => {
+                        rows.push(row);
+                    }
+                }
+            }
+
+            Ok((query_result, rows))
+        })
+    }
+
     /// Execute the query and returns exactly one row.
     fn fetch_one<'e, 'q: 'e, E>(
         self,

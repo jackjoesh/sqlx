@@ -1,9 +1,12 @@
+use crate::MySqlColumn;
 use std::iter::{Extend, IntoIterator};
+use std::sync::Arc;
 
 #[derive(Debug, Default)]
 pub struct MySqlQueryResult {
     pub(super) rows_affected: u64,
     pub(super) last_insert_id: u64,
+    pub(super) columns: Arc<Vec<MySqlColumn>>,
 }
 
 impl MySqlQueryResult {
@@ -13,6 +16,10 @@ impl MySqlQueryResult {
 
     pub fn rows_affected(&self) -> u64 {
         self.rows_affected
+    }
+
+    pub fn columns(&self) -> &[MySqlColumn] {
+        &self.columns
     }
 }
 

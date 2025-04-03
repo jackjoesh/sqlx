@@ -252,6 +252,26 @@ where
         executor.fetch_all(self).await
     }
 
+    /// Execute the query, return all the resulting rows in [`Vec`] and column in [`QueryResult`].
+    ///
+    /// ### Note: beware result set size.
+    /// This will attempt to collect the full result set of the query into memory.
+    ///
+    /// To avoid exhausting available memory, ensure the result set has a known upper bound,
+    /// e.g. using `LIMIT`.
+    #[inline]
+    pub async fn fetch_all_with_meta<'e, 'c: 'e, E>(
+        self,
+        executor: E,
+    ) -> Result<(Option<DB::QueryResult>, Vec<DB::Row>), Error>
+    where
+        'q: 'e,
+        A: 'e,
+        E: Executor<'c, Database = DB>,
+    {
+        executor.fetch_all_with_meta(self).await
+    }
+
     /// Execute the query, returning the first row or [`Error::RowNotFound`] otherwise.
     ///
     /// ### Note: for best performance, ensure the query returns at most one row.

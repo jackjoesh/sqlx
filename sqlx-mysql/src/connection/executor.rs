@@ -171,6 +171,7 @@ impl MySqlConnection {
                     let done = MySqlQueryResult {
                         rows_affected,
                         last_insert_id: ok.last_insert_id,
+                        columns: columns.clone(),
                     };
 
                     r#yield!(Either::Left(done));
@@ -212,6 +213,7 @@ impl MySqlConnection {
                         r#yield!(Either::Left(MySqlQueryResult {
                             rows_affected: 0,
                             last_insert_id: 0,
+                            columns: columns.clone(),
                         }));
 
                         if eof.status.contains(Status::SERVER_MORE_RESULTS_EXISTS) {
